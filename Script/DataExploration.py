@@ -10,7 +10,7 @@ dataset=pd.read_csv('../Data/train.csv',na_values=['NaN'])
 numerics = ['int','float']
 
 numeric_df = dataset.select_dtypes(include=numerics)
-"""
+
 for column in numeric_df:
     plt.hist(numeric_df[column].dropna(),color='green')
     plt.xlabel(column)
@@ -110,7 +110,7 @@ for ax in fig.axes:
 plt.subplots_adjust(wspace=.5,hspace=.5)
 plt.savefig('../Figure/4Report/CategoryScatter.png')
 plt.clf()
-"""
+
 dataset.fillna('NotGiven',inplace=True)
 category = dataset.select_dtypes(exclude=numerics)
 
@@ -121,4 +121,13 @@ for column in category:
     tmp = '../Figure/CategoryScatter/'+column+'.png'
     plt.savefig(tmp)
     plt.clf()
+
+dataset=pd.read_csv('dummytrain.csv',na_values=['NaN'],sep='\t')
+subdata=dataset[['SalePrice','BedroomAbvGr','YearBuilt',
+        'GrLivArea','TotalBsmtSF','WoodDeckSF','OverallQual']]
+cor=subdata.corr()
+
+fig, ax = plt.subplots(figsize=(10,12))
+sns_plot=sns.heatmap(cor,square=True)
+plt.savefig('../Figure/4Report/correlation.png')
 #box plot of categorical attributes and house Sale Price
